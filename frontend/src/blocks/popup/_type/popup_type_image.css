@@ -1,0 +1,10 @@
+.popup_type_image {
+  background-color: rgba(0, 0, 0, .9);
+}
+
+@media screen and (max-width: 767px) {
+  .popup_type_image {
+    padding: 40px;
+  }
+}
+

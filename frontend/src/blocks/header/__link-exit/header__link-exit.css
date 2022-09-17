@@ -1,0 +1,19 @@
+.header__link-exit {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #a9a9a9;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.header__link-exit:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 767px) {
+  .header__link-exit {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

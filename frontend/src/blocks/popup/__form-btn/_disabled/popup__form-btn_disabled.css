@@ -1,0 +1,11 @@
+.popup__form-btn_disabled {
+  border: 1px solid #000;
+  background-color: transparent;
+  color: #000;
+  opacity: .2;
+  cursor: default;
+}
+
+.popup__form-btn_disabled:hover {
+  opacity: .2;
+}

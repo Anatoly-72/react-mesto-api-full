@@ -1,0 +1,22 @@
+.login__save {
+  height: 50px;
+  width: 100%;
+  border: none;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.login__save:hover {
+  opacity: 0.8;
+}

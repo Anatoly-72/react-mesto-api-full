@@ -1,0 +1,22 @@
+.login__input {
+  border: none;
+  border-bottom: rgba(255, 255, 255, 1) 1px solid;
+  font-family: "Inter", Arial, sans-serif;
+  padding: 0;
+  min-height: 27px;
+  font-size: 14px;
+  line-height: 17px;
+  border-radius: 0;
+  width: 100%;
+  color: #fff;
+  background-color: black;
+}
+
+.login__input:hover {
+  border: none;
+  border-bottom: rgba(255, 255, 255, 0.3) 1px solid;
+}
+
+.login__input:first-child {
+  margin: 0 0 27px 0;
+}
