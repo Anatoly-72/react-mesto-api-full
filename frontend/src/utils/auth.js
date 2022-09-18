@@ -1,5 +1,5 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
-// export const BASE_URL = 'http://localhost:3000/';
+// export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'http://localhost:3001';
 
 const checkResponse = (res) => {
   return res.ok
@@ -8,7 +8,7 @@ const checkResponse = (res) => {
 };
 
 const headers = {
-  Accept: 'application/json',
+  'Accept': 'application/json',
   'Content-Type': 'application/json',
 };
 

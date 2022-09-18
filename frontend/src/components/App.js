@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute.js';
-import * as auth from '../utils/auth.js';
-import Header from './Header.js';
-import Main from './Main.js';
-import Footer from './Footer.js';
-import EditProfilePopup from './EditProfilePopup.js';
-import EditAvatarPopup from './EditAvatarPopup.js';
-import AddPlacePopup from './AddPlacePopup.js';
-import ImagePopup from './ImagePopup.js';
-import Login from './Login.js';
-import Register from './Register.js';
-import api from '../utils/api.js';
-import CurrentUserContext from '../contexts/CurrentUserContext.js';
-import InfoTooltip from './InfoTooltip.js';
+import { useState, useEffect } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute.js";
+import * as auth from "../utils/auth.js";
+import Header from "./Header.js";
+import Main from "./Main.js";
+import Footer from "./Footer.js";
+import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
+import ImagePopup from "./ImagePopup.js";
+import Login from "./Login.js";
+import Register from "./Register.js";
+import api from "../utils/api.js";
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
+import InfoTooltip from "./InfoTooltip.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -26,7 +26,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(false);
   const [InfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState("");
   const history = useHistory();
 
   const isOpen =
@@ -37,14 +37,14 @@ function App() {
 
   useEffect(() => {
     function closeByEscape(evt) {
-      if (evt.key === 'Escape') {
+      if (evt.key === "Escape") {
         closeAllPopups();
       }
     }
     if (isOpen) {
-      document.addEventListener('keydown', closeByEscape);
+      document.addEventListener("keydown", closeByEscape);
       return () => {
-        document.removeEventListener('keydown', closeByEscape);
+        document.removeEventListener("keydown", closeByEscape);
       };
     }
   }, [isOpen]);
@@ -59,6 +59,19 @@ function App() {
         console.log(`Ошибка: ${err}`);
       });
   }, []);
+
+//   useEffect(() => {
+//     if (isLoggedIn) {
+//        Promise.all([api.getUserInfo(), api.getInitialCards()])
+//           .then(([userData, cards]) => {
+//              setCurrentUser(userData);
+//              setCards(cards)
+//           })
+//           .catch((err) => {
+//              console.log(`Ошибка: ${err}`);
+//           });
+//     }
+//  }, [isLoggedIn]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -175,7 +188,7 @@ function App() {
       .then((data) => {
         setRegistrationStatus(true);
         handleInfoTooltipPopupOpen();
-        history.push('/sign-in');
+        history.push("/sign-in");
       })
       .catch((err) => {
         console.log(err);
@@ -189,41 +202,41 @@ function App() {
       .authorize(data)
       .then((data) => {
         setIsLoggedIn(true);
-        localStorage.setItem('jwt', data.token);
-        history.push('/');
+        localStorage.setItem("jwt", data.token);
+        history.push("/");
       })
       .catch((err) => console.log(err));
   }
 
- function handleTokenCheck() {
-   const jwt = localStorage.getItem('jwt');
-   if (!jwt) {
-     return;
-   }
-   auth
-     .getContent(jwt)
-     .then((data) => {
-       setUserEmail(data.data.email);
-       setIsLoggedIn(true);
-       history.push('/');
-     })
-     .catch((err) => console.log(err));
- }
+  function handleTokenCheck() {
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      return;
+    }
+    auth
+      .getContent(jwt)
+      .then((data) => {
+        setUserEmail(data.email);
+        setIsLoggedIn(true);
+        history.push("/");
+      })
+      .catch((err) => console.log(err));
+  }
 
- useEffect(() => {
-   handleTokenCheck();
- }, []);
+  useEffect(() => {
+    handleTokenCheck();
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push('/');
+      history.push("/");
     }
   }, [isLoggedIn]);
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('jwt');
-    history.push('/sign-in');
+    localStorage.removeItem("jwt");
+    history.push("/sign-in");
   };
 
   return (
