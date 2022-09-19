@@ -64,17 +64,6 @@ function App() {
     }
   }, [isOpen]);
 
-  // useEffect(() => {
-  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([userData, cards]) => {
-  //       setCurrentUser(userData);
-  //       setСards(cards);
-  //     })
-  //     .catch((err) => {
-  //       console.log(`Ошибка: ${err}`);
-  //     });
-  // }, []);
-
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
@@ -210,16 +199,16 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setСards(cards);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, []);
+  // useEffect(() => {
+  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
+  //     .then(([userData, cards]) => {
+  //       setCurrentUser(userData);
+  //       setСards(cards);
+  //     })
+  //     .catch((err) => {
+  //       console.log(`Ошибка: ${err}`);
+  //     });
+  // }, []);
 
   function handleTokenCheck() {
     const jwt = localStorage.getItem('jwt');
