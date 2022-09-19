@@ -1,32 +1,47 @@
-import { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute.js";
-import * as auth from "../utils/auth.js";
-import Header from "./Header.js";
-import Main from "./Main.js";
-import Footer from "./Footer.js";
-import EditProfilePopup from "./EditProfilePopup.js";
-import EditAvatarPopup from "./EditAvatarPopup.js";
-import AddPlacePopup from "./AddPlacePopup.js";
-import ImagePopup from "./ImagePopup.js";
-import Login from "./Login.js";
-import Register from "./Register.js";
-import api from "../utils/api.js";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import InfoTooltip from "./InfoTooltip.js";
+import { useState, useEffect } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute.js';
+import * as auth from '../utils/auth.js';
+import Header from './Header.js';
+import Main from './Main.js';
+import Footer from './Footer.js';
+import EditProfilePopup from './EditProfilePopup.js';
+import EditAvatarPopup from './EditAvatarPopup.js';
+import AddPlacePopup from './AddPlacePopup.js';
+import ImagePopup from './ImagePopup.js';
+import Login from './Login.js';
+import Register from './Register.js';
+import api from '../utils/api.js';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
+import InfoTooltip from './InfoTooltip.js';
 
 function App() {
+  // Стейты для отображения поп-апов (состояние - открыт / не открыт)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  // Стейт для выбранной карточки. Используется в поп-апе картинки в полном размере.
+  // Чтобы показать картинку нужной карточки при клике на фото
   const [selectedCard, setSelectedCard] = useState(null);
+
+  // Стейт для данных пользователя (имя, о себе, автарка, id)
   const [currentUser, setCurrentUser] = useState({});
+
+  // Стейт для карточек. Для отрисовки и работы с карточками, полученными с сервера
   const [cards, setСards] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
+
+  // Стейт для авторизации. Показывает, залогинен пользователь или нет. Для показа только нужного контента
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Стейт для данных залогиненного пользователя. Содержит _id и email для отображения в приложении
   const [registrationStatus, setRegistrationStatus] = useState(false);
+
+  // Стейт для отображения InfoTooltip. Модалка при успешной/ неудачной регистрации или авторизации
   const [InfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState('');
   const history = useHistory();
 
   const isOpen =
@@ -37,41 +52,28 @@ function App() {
 
   useEffect(() => {
     function closeByEscape(evt) {
-      if (evt.key === "Escape") {
+      if (evt.key === 'Escape') {
         closeAllPopups();
       }
     }
     if (isOpen) {
-      document.addEventListener("keydown", closeByEscape);
+      document.addEventListener('keydown', closeByEscape);
       return () => {
-        document.removeEventListener("keydown", closeByEscape);
+        document.removeEventListener('keydown', closeByEscape);
       };
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setСards(cards);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, []);
-
-//   useEffect(() => {
-//     if (isLoggedIn) {
-//        Promise.all([api.getUserInfo(), api.getInitialCards()])
-//           .then(([userData, cards]) => {
-//              setCurrentUser(userData);
-//              setCards(cards)
-//           })
-//           .catch((err) => {
-//              console.log(`Ошибка: ${err}`);
-//           });
-//     }
-//  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
+  //     .then(([userData, cards]) => {
+  //       setCurrentUser(userData);
+  //       setСards(cards);
+  //     })
+  //     .catch((err) => {
+  //       console.log(`Ошибка: ${err}`);
+  //     });
+  // }, []);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -188,7 +190,7 @@ function App() {
       .then((data) => {
         setRegistrationStatus(true);
         handleInfoTooltipPopupOpen();
-        history.push("/sign-in");
+        history.push('/sign-in');
       })
       .catch((err) => {
         console.log(err);
@@ -202,14 +204,25 @@ function App() {
       .authorize(data)
       .then((data) => {
         setIsLoggedIn(true);
-        localStorage.setItem("jwt", data.token);
-        history.push("/");
+        localStorage.setItem('jwt', data.token);
+        history.push('/');
       })
       .catch((err) => console.log(err));
   }
 
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([userData, cards]) => {
+        setCurrentUser(userData);
+        setСards(cards);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }, []);
+
   function handleTokenCheck() {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem('jwt');
     if (!jwt) {
       return;
     }
@@ -217,10 +230,17 @@ function App() {
       .getContent(jwt)
       .then((data) => {
         setUserEmail(data.email);
+        setCurrentUser(data);
         setIsLoggedIn(true);
-        history.push("/");
+        history.push('/');
       })
       .catch((err) => console.log(err));
+    // api
+    //   .getInitialCards(jwt)
+    //   .then((initialCards) => {
+    //     setСards(initialCards)
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   useEffect(() => {
@@ -229,14 +249,14 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push("/");
+      history.push('/');
     }
   }, [isLoggedIn]);
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("jwt");
-    history.push("/sign-in");
+    localStorage.removeItem('jwt');
+    history.push('/sign-in');
   };
 
   return (
