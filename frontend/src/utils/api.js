@@ -109,7 +109,7 @@ const api = new Api({
   baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'authorization': `Bearer ${localStorage.getItem('jwt')}`
+    // 'authorization': `Bearer ${localStorage.getItem('jwt')}`
   }
 });
 

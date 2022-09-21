@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  
+
   //Подписка на контекст CurrentUserContext
   const currentUser = useContext(CurrentUserContext);
 
@@ -68,3 +68,5 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 }
 
 export default Card;
+
+

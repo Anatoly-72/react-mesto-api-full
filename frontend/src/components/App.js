@@ -14,6 +14,7 @@ import Register from './Register.js';
 import api from '../utils/api.js';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
 import InfoTooltip from './InfoTooltip.js';
+import PopupWithConfirmation from './PopupWithConfirmation.js';
 
 function App() {
   // Стейты для отображения поп-апов (состояние - открыт / не открыт)
@@ -30,7 +31,7 @@ function App() {
 
   // Стейт для карточек. Для отрисовки и работы с карточками, полученными с сервера
   const [cards, setСards] = useState([]);
-  
+
   // Стейт загрузки
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,6 +47,10 @@ function App() {
   // Стейт для отображения emal пользователя.
   const [userEmail, setUserEmail] = useState('');
 
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+
+  const [removedCardId, setRemovedCardId] = useState('');
+
   // Хук обеспечивает прямой доступ к истории React Router
   const history = useHistory();
 
@@ -53,7 +58,9 @@ function App() {
     isEditAvatarPopupOpen ||
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
+    isConfirmationPopupOpen ||
     selectedCard;
+
 
   useEffect(() => {
     function closeByEscape(evt) {
@@ -68,6 +75,8 @@ function App() {
       };
     }
   }, [isOpen]);
+
+
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -94,8 +103,14 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setInfoTooltipPopupOpen(false);
+    setIsConfirmationPopupOpen(false)
     setSelectedCard(null);
   }
+
+  function handleCardDeleteClick(cardId) {
+    setIsConfirmationPopupOpen(true);
+    setRemovedCardId(cardId);
+  };
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i === currentUser._id);
@@ -118,6 +133,7 @@ function App() {
       .deleteCard(card._id, jwt)
       .then(() => {
         setСards((cards) => cards.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -268,7 +284,7 @@ function App() {
               cards={cards}
               onCardClick={handleCardClick}
               onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              onCardDelete={handleCardDeleteClick}
             />
           </Switch>
           <Footer />
@@ -293,6 +309,12 @@ function App() {
             onAddPlace={handleAddPlaceSubmit}
             isLoading={isLoading}
           />
+
+          <PopupWithConfirmation
+            isOpen={isConfirmationPopupOpen}
+            onClose={closeAllPopups}
+            onSubmit={handleCardDelete}
+            card={removedCardId} />
 
           <InfoTooltip
             onClose={closeAllPopups}
