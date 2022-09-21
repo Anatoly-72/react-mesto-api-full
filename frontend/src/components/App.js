@@ -30,7 +30,8 @@ function App() {
 
   // Стейт для карточек. Для отрисовки и работы с карточками, полученными с сервера
   const [cards, setСards] = useState([]);
-
+  
+  // Стейт загрузки
   const [isLoading, setIsLoading] = useState(false);
 
   // Стейт для авторизации. Показывает, залогинен пользователь или нет. Для показа только нужного контента
@@ -41,7 +42,11 @@ function App() {
 
   // Стейт для отображения InfoTooltip. Модалка при успешной/ неудачной регистрации или авторизации
   const [InfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
+
+  // Стейт для отображения emal пользователя.
   const [userEmail, setUserEmail] = useState('');
+
+  // Хук обеспечивает прямой доступ к истории React Router
   const history = useHistory();
 
   const isOpen =
