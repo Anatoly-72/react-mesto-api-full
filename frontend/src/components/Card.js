@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  
   //Подписка на контекст CurrentUserContext
   const currentUser = useContext(CurrentUserContext);
 
   //Определяем, являемся ли мы владельцем карточки
-  // const isOwn = card.owner._id === currentUser._id;
   const isOwn = card.owner === currentUser._id;
 
   //Переменная для класса кнопки удаления (если карточка наша - видим иконку удаления)

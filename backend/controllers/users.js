@@ -110,7 +110,7 @@ module.exports.updateProfile = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       } else {
-        res.send({ data: user });
+        res.send(user);
       }
     })
     .catch((err) => {
@@ -134,7 +134,7 @@ module.exports.updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       } else {
-        res.send({ data: user });
+        res.send(user);
       }
     })
     .catch((err) => {
