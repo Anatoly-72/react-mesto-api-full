@@ -93,38 +93,26 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    if (!isLiked) {
-      api
-        .setLike(card._id)
-        .then((newCard) => {
-          setСards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
-          );
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
-      api
-        .deleteLike(card._id)
-        .then((newCard) => {
-          setСards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
-          );
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }
+    const isLiked = card.likes.some((i) => i === currentUser._id);
+    const jwt = localStorage.getItem('jwt');
+    api
+      .changeLikeCardStatus(card._id, !isLiked, jwt)
+      .then((newCard) => {
+        setСards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  };
 
   function handleCardDelete(card) {
+    const jwt = localStorage.getItem('jwt');
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id, jwt)
       .then(() => {
-        setСards((cards) => cards.filter((c) => c._id !== card._id && c));
+        setСards((cards) => cards.filter((c) => c._id !== card._id));
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -132,9 +120,10 @@ function App() {
   }
 
   function handleUpdateUser(data) {
+    const jwt = localStorage.getItem('jwt');
     setIsLoading(true);
     api
-      .setUserInfo(data)
+      .setUserInfo(data, jwt)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -146,9 +135,10 @@ function App() {
   }
 
   function handleUpdateAvatar(data) {
+    const jwt = localStorage.getItem('jwt');
     setIsLoading(true);
     api
-      .setAvatar(data)
+      .setAvatar(data, jwt)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -160,9 +150,10 @@ function App() {
   }
 
   function handleAddPlaceSubmit(data) {
+    const jwt = localStorage.getItem('jwt');
     setIsLoading(true);
     api
-      .createCard(data)
+      .createCard(data, jwt)
       .then((newCard) => {
         setСards([newCard, ...cards]);
         closeAllPopups();
@@ -194,21 +185,14 @@ function App() {
       .then((data) => {
         setIsLoggedIn(true);
         localStorage.setItem('jwt', data.token);
+        handleTokenCheck();
         history.push('/');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        handleInfoTooltipPopupOpen();
+      });
   }
-
-  // useEffect(() => {
-  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([userData, cards]) => {
-  //       setCurrentUser(userData);
-  //       setСards(cards);
-  //     })
-  //     .catch((err) => {
-  //       console.log(`Ошибка: ${err}`);
-  //     });
-  // }, []);
 
   function handleTokenCheck() {
     const jwt = localStorage.getItem('jwt');
@@ -218,29 +202,34 @@ function App() {
     auth
       .getContent(jwt)
       .then((data) => {
-        setUserEmail(data.email);
-        setCurrentUser(data);
+        setUserEmail(data.data.email);
         setIsLoggedIn(true);
         history.push('/');
       })
       .catch((err) => console.log(err));
-    // api
-    //   .getInitialCards(jwt)
-    //   .then((initialCards) => {
-    //     setСards(initialCards)
-    //   })
-    //   .catch((err) => console.log(err));
+      api
+      .getInitialCards(jwt)
+      .then((res) => {
+        setСards(res.data)
+      })
+      api
+      .getUserInfo(jwt)
+      .then((res) => {
+        setCurrentUser(res.data)
+      })
+      .catch((err) => console.log(err));
   }
 
   useEffect(() => {
     handleTokenCheck();
-  }, []);
+    // eslint-disable-next-line
+  }, [history]);
 
   useEffect(() => {
     if (isLoggedIn) {
       history.push('/');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, history]);
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
@@ -274,7 +263,7 @@ function App() {
               cards={cards}
               onCardClick={handleCardClick}
               onCardLike={handleCardLike}
-              onCardDeleteClick={handleCardDelete}
+              onCardDelete={handleCardDelete}
             />
           </Switch>
           <Footer />

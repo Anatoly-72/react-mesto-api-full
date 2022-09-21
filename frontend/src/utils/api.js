@@ -3,6 +3,7 @@ class Api {
     this._baseUrl = options.baseUrl;
   }
 
+  //получаем информацию о пользователе
   getUserInfo(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
@@ -12,6 +13,7 @@ class Api {
     }).then(this._getResponseData);
   }
 
+  //обновляем информацию о пользователе
   setUserInfo(data, jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -26,15 +28,7 @@ class Api {
     }).then(this._getResponseData);
   }
 
-  getInitialCards(jwt) {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        'authorization': `Bearer ${jwt}`,
-        'Content-Type': 'application/json'
-      },
-    }).then(this._getResponseData);
-  }
-
+  //обновляем аватар пользователя
   setAvatar(avatar, jwt) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
@@ -46,6 +40,17 @@ class Api {
     }).then(this._getResponseData);
   }
 
+  //получаем карточки
+  getInitialCards(jwt) {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        'authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      },
+    }).then(this._getResponseData);
+  }
+
+  //добавляем новую карточку
   createCard(data, jwt) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -60,6 +65,7 @@ class Api {
     }).then(this._getResponseData);
   }
 
+  //удаляем карточку
   deleteCard(cardId, jwt) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
@@ -70,25 +76,16 @@ class Api {
     }).then(this._getResponseData);
   }
 
-  setLike(cardId, jwt) {
+  //статус лайка/дизлайка карточки
+  changeLikeCardStatus(cardId, isLiked, jwt) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: {
-        'authorization': `Bearer ${jwt}`,
-        'Content-Type': 'application/json'
-      },
+       method: `${!isLiked ? 'DELETE' : 'PUT'}`,
+       headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`,
+       },
     }).then(this._getResponseData);
-  }
-
-  deleteLike(cardId, jwt) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: {
-        'authorization': `Bearer ${jwt}`,
-        'Content-Type': 'application/json'
-      },
-    }).then(this._getResponseData);
-  }
+ }
 
   _getResponseData(res) {
     if (res.ok) {
