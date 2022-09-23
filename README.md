@@ -50,6 +50,7 @@
  <img src="https://img.icons8.com/color/32/000000/figma--v1.png" alt="Figma" width="20" height="20"/> Figma
 
  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  alt="GitHub" width="20" height="20"/> GitHub
+ 
 
 
 
