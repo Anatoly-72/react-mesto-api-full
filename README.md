@@ -37,23 +37,16 @@
 
 ### :gem: Стек технологий:​
 
-<img src="https://img.icons8.com/color/38/000000/javascript--v1.png" alt="JS" width="20" height="20"/>
-JavaScript. React.
+<img src="https://img.icons8.com/color/38/000000/javascript--v1.png" alt="JS" width="20" height="20"/> JavaScript, React.
 
-<img src="https://img.icons8.com/ultraviolet/38/000000/react--v1.png" alt="React" width="20" height="20"/>
-Node.js.
+<img src="https://img.icons8.com/ultraviolet/38/000000/react--v1.png" alt="React" width="20" height="20"/> Node.js
 
-<img src="https://img.icons8.com/color/36/000000/html-5--v1.png" alt="HTML" width="20" height="20"/>
-HTML.
+<img src="https://img.icons8.com/color/36/000000/html-5--v1.png" alt="HTML" width="20" height="20"/> HTML
 
-<img src="https://cdn-icons-png.flaticon.com/128/802/802251.png" alt="HTML" width="20" height="20"/>
-CSS. Flex, grid, @media.
+<img src="https://cdn-icons-png.flaticon.com/128/802/802251.png" alt="HTML" width="20" height="20"/> CSS. Flex, grid, @media
 
-<img src="https://img.icons8.com/color/36/000000/css3.png" alt="CSS. Flex, grid, @media" width="20" height="20"/>
-BEM nested.
+<img src="https://img.icons8.com/color/36/000000/css3.png" alt="CSS. Flex, grid, @media" width="20" height="20"/> BEM nested
 
- <img src="https://img.icons8.com/color/32/000000/figma--v1.png" alt="Figma" width="20" height="20"/>
-Figma.
+ <img src="https://img.icons8.com/color/32/000000/figma--v1.png" alt="Figma" width="20" height="20"/> Figma
 
- <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  alt="GitHub" width="20" height="20"/>
-GitHub.
+ <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  alt="GitHub" width="20" height="20"/> GitHub
