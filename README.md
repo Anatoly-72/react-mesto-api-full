@@ -47,19 +47,18 @@
 
 <img src="https://img.icons8.com/color/36/000000/css3.png" alt="CSS. Flex, grid, @media" width="20" height="20"/> BEM nested
 
- <img src="https://img.icons8.com/color/32/000000/figma--v1.png" alt="Figma" width="20" height="20"/> Figma
+<img src="https://img.icons8.com/color/32/000000/figma--v1.png" alt="Figma" width="20" height="20"/> Figma
 
- <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  alt="GitHub" width="20" height="20"/> GitHub
- 
-
+<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  alt="GitHub" width="20" height="20"/> GitHub
 
 
-Адрес репозитория: https://github.com/Anatoly-72/react-mesto-api-full
 
 ## Ссылки на проект
 
 IP-адрес 84.201.173.146
 
-Frontend https://...
+Frontend https://domainname.anatoly.nomorepartiesxyz.ru
 
-Backend https://...
+Backend https://api.domainname.anatoly.nomorepartiesxyz.ru
+
+Адрес репозитория: https://github.com/Anatoly-72/react-mesto-api-full
