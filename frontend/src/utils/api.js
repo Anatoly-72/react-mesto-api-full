@@ -103,7 +103,7 @@ class Api {
 //   },
 // });
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'http://localhost:3000';
 
 const api = new Api({
   baseUrl: BASE_URL,

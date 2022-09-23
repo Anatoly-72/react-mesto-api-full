@@ -7,7 +7,9 @@ const BadAuthError = require('../errors/bad-auth-err');
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 
-const { STATUS_OK, SEKRET_KEY, SALT_ROUNDS } = require('../utils/constants');
+const { STATUS_OK, SALT_ROUNDS } = require('../utils/constants');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // GET /users — возвращаем всех пользователей
 module.exports.getUsers = (req, res, next) => {
@@ -22,9 +24,11 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, SEKRET_KEY, {
-        expiresIn: '7d',
-      });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
       res.send({ token });
     })
     .catch(() => {
