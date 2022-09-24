@@ -103,7 +103,7 @@ class Api {
 //   },
 // });
 
-const BASE_URL = 'http://api.domainname.anatoly.nomorepartiesxyz.ru';
+const BASE_URL = 'https://api.domainname.anatoly.nomorepartiesxyz.ru';
 
 const api = new Api({
   baseUrl: BASE_URL,

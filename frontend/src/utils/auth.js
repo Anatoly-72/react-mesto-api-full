@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.domainname.anatoly.nomorepartiesxyz.ru';
+export const BASE_URL = 'https://api.domainname.anatoly.nomorepartiesxyz.ru';
 
 const checkResponse = (res) => {
   return res.ok
