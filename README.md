@@ -55,7 +55,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 84.201.173.146
+IP 84.201.173.146
 
 Frontend https://domainname.anatoly.nomorepartiesxyz.ru
 
